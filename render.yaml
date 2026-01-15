@@ -1,8 +1,7 @@
 services:
   - type: web
+    runtime: python
     name: autoimport-backend
-    env: python
-    plan: free
     rootDir: pilot/backend
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -16,7 +15,8 @@ services:
       mountPath: /var/data
       sizeGB: 1
 
-  - type: static_site
+  - type: web
+    runtime: static
     name: autoimport-frontend
     rootDir: pilot/frontend
     buildCommand: npm install && npm run build
