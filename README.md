@@ -15,17 +15,13 @@
 
 См. подробные инструкции в [pilot/README.md](pilot/README.md)
 
-## ☁️ Деплой на Render
-
-В репозитории есть `render.yaml` для деплоя через Render Blueprint. Подробности — в `pilot/README.md`.
-
-### Кратко:
+### Локальный запуск:
 
 1. **Backend:**
    ```bash
    cd pilot/backend
    pip install -r requirements.txt
-   cp .env.example .env  # Заполните OPENAI_API_KEY и OPENAI_BASE_URL
+   cp .env.example .env  # Заполните OPENAI_API_KEY
    python seed_cars.py  # Заполнить каталог демо-автомобилями
    python main.py
    ```
@@ -36,6 +32,33 @@
    npm install
    npm run dev
    ```
+
+---
+
+## ☁️ Деплой на Vercel + Railway (бесплатно, без карты)
+
+### Backend → Railway
+
+1. Зайди на [railway.app](https://railway.app) → войди через GitHub
+2. **New Project → Deploy from GitHub repo** → выбери репозиторий
+3. Railway спросит Root Directory → укажи `pilot/backend`
+4. Добавь переменную окружения: `OPENAI_API_KEY`
+5. После деплоя скопируй URL (например `https://xxx.up.railway.app`)
+
+### Frontend → Vercel
+
+1. Зайди на [vercel.com](https://vercel.com) → войди через GitHub
+2. **Add New → Project** → выбери репозиторий
+3. В настройках:
+   - **Root Directory:** `pilot/frontend`
+   - **Framework Preset:** Vite
+4. Добавь переменную окружения:
+   - `VITE_API_URL` = URL твоего Railway backend (например `https://xxx.up.railway.app`)
+5. Deploy!
+
+### После деплоя
+
+Отредактируй `pilot/frontend/vercel.json` — замени `autoimport-backend.up.railway.app` на реальный URL твоего Railway backend.
 
 ## 📁 Структура
 
