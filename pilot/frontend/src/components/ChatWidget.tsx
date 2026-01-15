@@ -23,6 +23,9 @@ const FALLBACK_RESPONSES = [
   'Отлично! Оставьте, пожалуйста, ваш номер телефона, и наш менеджер свяжется с вами для обсуждения деталей.',
 ]
 
+const API_BASE = import.meta.env.VITE_API_BASE || ''
+const apiUrl = (path: string) => (API_BASE ? `${API_BASE}${path}` : path)
+
 export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -78,7 +81,7 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 30000) // 30s timeout
 
-      const response = await fetch('/api/chat', {
+      const response = await fetch(apiUrl('/api/chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

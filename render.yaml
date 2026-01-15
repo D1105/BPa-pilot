@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: autoimport-backend
+    env: python
+    plan: free
+    rootDir: pilot/backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        value: sqlite+aiosqlite:///var/data/autoimport.db
+    disk:
+      name: autoimport-data
+      mountPath: /var/data
+      sizeGB: 1
+
+  - type: static
+    name: autoimport-frontend
+    rootDir: pilot/frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist

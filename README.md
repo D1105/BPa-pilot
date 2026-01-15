@@ -15,6 +15,10 @@
 
 См. подробные инструкции в [pilot/README.md](pilot/README.md)
 
+## ☁️ Деплой на Render
+
+В репозитории есть `render.yaml` для деплоя через Render Blueprint. Подробности — в `pilot/README.md`.
+
 ### Кратко:
 
 1. **Backend:**

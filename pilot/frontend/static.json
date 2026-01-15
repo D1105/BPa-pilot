@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/*", "destination": "https://autoimport-backend.onrender.com/api/*" },
+    { "source": "/*", "destination": "/index.html" }
+  ]
+}

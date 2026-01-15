@@ -3,11 +3,12 @@
 """
 from datetime import datetime
 from contextlib import asynccontextmanager
+import os
 from sqlalchemy import Column, Integer, String, DateTime, Text, Float, Boolean, create_engine
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = "sqlite+aiosqlite:///./autoimport.db"
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./autoimport.db")
 
 engine = create_async_engine(DATABASE_URL, echo=False)
 async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)

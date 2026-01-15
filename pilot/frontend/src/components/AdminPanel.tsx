@@ -66,6 +66,9 @@ interface AdminPanelProps {
   onClose: () => void
 }
 
+const API_BASE = import.meta.env.VITE_API_BASE || ''
+const apiUrl = (path: string) => (API_BASE ? `${API_BASE}${path}` : path)
+
 export default function AdminPanel({ isOpen, onClose }: AdminPanelProps) {
   const [leads, setLeads] = useState<Lead[]>([])
   const [stats, setStats] = useState<Stats | null>(null)
@@ -89,8 +92,8 @@ export default function AdminPanel({ isOpen, onClose }: AdminPanelProps) {
     setIsLoading(true)
     try {
       const [leadsRes, statsRes] = await Promise.all([
-        fetch('/api/leads'),
-        fetch('/api/stats'),
+        fetch(apiUrl('/api/leads')),
+        fetch(apiUrl('/api/stats')),
       ])
       
       if (leadsRes.ok) {
@@ -111,7 +114,7 @@ export default function AdminPanel({ isOpen, onClose }: AdminPanelProps) {
 
   const fetchConversation = async (sessionId: string) => {
     try {
-      const res = await fetch(`/api/conversations/${sessionId}`)
+      const res = await fetch(apiUrl(`/api/conversations/${sessionId}`))
       if (res.ok) {
         const data = await res.json()
         setConversation(data)
@@ -134,7 +137,7 @@ export default function AdminPanel({ isOpen, onClose }: AdminPanelProps) {
   
   const fetchPresets = async () => {
     try {
-      const res = await fetch('/api/simulator/presets')
+      const res = await fetch(apiUrl('/api/simulator/presets'))
       if (res.ok) {
         const data = await res.json()
         setPresets(data.presets)
@@ -160,7 +163,7 @@ export default function AdminPanel({ isOpen, onClose }: AdminPanelProps) {
     setSimLoading(true)
     
     try {
-      const res = await fetch('/api/simulator/chat', {
+      const res = await fetch(apiUrl('/api/simulator/chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -188,7 +191,7 @@ export default function AdminPanel({ isOpen, onClose }: AdminPanelProps) {
     
     setSimLoading(true)
     try {
-      const res = await fetch('/api/simulator/evaluate', {
+      const res = await fetch(apiUrl('/api/simulator/evaluate'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
