@@ -16,7 +16,7 @@ services:
       mountPath: /var/data
       sizeGB: 1
 
-  - type: static
+  - type: static_site
     name: autoimport-frontend
     rootDir: pilot/frontend
     buildCommand: npm install && npm run build
